@@ -1,5 +1,10 @@
 name: 每日股票分析
 
+# ===================== 全局环境变量（关键修改） =====================
+env:
+  # 强制所有 JavaScript 编写的 Actions 工具使用 Node.js 24
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 on:
   # 定时触发 - 每天北京时间 18:00 (UTC 10:00)
   schedule:
@@ -33,11 +38,6 @@ jobs:
     runs-on: ubuntu-latest
     # 添加超时限制，防止任务卡死
     timeout-minutes: 30
-    # ===================== 新增配置 START =====================
-    env:
-      # 强制使用 Node.js 24 运行 Actions，解决 Node.js 20 弃用警告
-      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
-    # ===================== 新增配置 END =====================
     
     steps:
       - name: 随机延迟（避免固定时间访问）
@@ -82,6 +82,7 @@ jobs:
 
           # Anthropic / Claude
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          ANTHROPIC_MODEL: ${{ vars.ANTHROPIC_API_KEY }}
           ANTHROPIC_MODEL: ${{ vars.ANTHROPIC_MODEL || secrets.ANTHROPIC_MODEL || 'claude-3-5-sonnet-20241022' }}
 
           # ==========================================
